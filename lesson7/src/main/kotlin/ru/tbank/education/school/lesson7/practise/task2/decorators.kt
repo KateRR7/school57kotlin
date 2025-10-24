@@ -20,7 +20,18 @@ package ru.tbank.education.school.lesson7.practise.task2
  * printMessage("C") // выполняется
  */
 fun <A, R> limitRate(intervalMs: Long, f: (A) -> R): (A) -> R? {
-    TODO()
+    var lastCall: Long? = null
+
+    return {arg:A ->
+
+        val now = System.currentTimeMillis()
+        if (lastCall == null || now - lastCall!! >= intervalMs){
+            lastCall = now
+            f(arg)
+        } else{
+            null
+        }
+    }
 }
 
 
