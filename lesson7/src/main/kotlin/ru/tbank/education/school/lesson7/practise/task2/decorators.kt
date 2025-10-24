@@ -20,7 +20,18 @@ package ru.tbank.education.school.lesson7.practise.task2
  * printMessage("C") // выполняется
  */
 fun <A, R> limitRate(intervalMs: Long, f: (A) -> R): (A) -> R? {
-    TODO()
+    var lastCall: Long? = null
+
+    return {arg:A ->
+
+        val now = System.currentTimeMillis()
+        if (lastCall == null || now - lastCall!! >= intervalMs){
+            lastCall = now
+            f(arg)
+        } else{
+            null
+        }
+    }
 }
 
 
@@ -61,8 +72,11 @@ fun <A, R> safeCall(f: (A) -> R): (A) -> Result<R> {
  * [add] вернула результат: 15
  * 15
  */
-fun <A, R> logCalls(name: String, f: (A) -> R): (A) -> R {
-    TODO()
+fun <A, R> logCalls(name: String, f: (A) -> R): (A) -> R = { a: A ->
+    println("[$name] вызвана с аргументом: $a")
+    val result = f(a)
+    println("[$name] вернула результат: $result")
+    result
 }
 
 
