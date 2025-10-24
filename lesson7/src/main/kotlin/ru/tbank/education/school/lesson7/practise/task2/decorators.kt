@@ -72,8 +72,11 @@ fun <A, R> safeCall(f: (A) -> R): (A) -> Result<R> {
  * [add] вернула результат: 15
  * 15
  */
-fun <A, R> logCalls(name: String, f: (A) -> R): (A) -> R {
-    TODO()
+fun <A, R> logCalls(name: String, f: (A) -> R): (A) -> R = { a: A ->
+    println("[$name] вызвана с аргументом: $a")
+    val result = f(a)
+    println("[$name] вернула результат: $result")
+    result
 }
 
 

@@ -28,6 +28,18 @@ package ru.tbank.education.school.lesson7.practise.task1
 data class Employee(val name: String, val salary: Double, val department: String)
 data class SalaryReport(val totalSalary: Double, val avgSalary: Double, val departmentsCount: Int)
 
-fun buildSalaryReport(employees: List<Employee>): SalaryReport {
-    TODO()
-}
+fun buildSalaryReport(employees: List<Employee>): SalaryReport = employees
+    .fold(Triple(0.0, emptySet<String>(), 0)) { (total, departments, count), employee ->
+        Triple(
+            total + employee.salary,
+            departments + employee.department,
+            count + 1
+        )
+    }
+    .let { (total, departments, count) ->
+        SalaryReport(
+            totalSalary = total,
+            avgSalary = if (count > 0) total / count else 0.0,
+            departmentsCount = departments.size
+        )
+    }
