@@ -13,6 +13,9 @@ package ru.tbank.education.school.lesson7.practise.task1// 6) GROUPBY — топ
  */
 data class Transfer(val category: String, val amount: Double)
 
-fun top3Categories(transfers: List<Transfer>): List<Pair<String, Double>> {
-    TODO()
-}
+fun top3Categories(transfers: List<Transfer>): List<Pair<String, Double>> =
+    transfers.groupBy { it.category }
+        .mapValues { (_, transfers) -> transfers.sumOf { it.amount } }
+        .toList()
+        .sortedByDescending { it.second }
+        .take(3)
